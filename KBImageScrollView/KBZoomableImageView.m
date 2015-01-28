@@ -18,6 +18,7 @@
 
 @property (nonatomic, strong) UIScrollView *container;
 @property (nonatomic, strong) UIImageView *imageView;
+@property (nonatomic, strong) UITapGestureRecognizer *doubleTapGesture;
 
 @end
 
@@ -64,6 +65,7 @@
     self.container = [[UIScrollView alloc] initWithFrame:self.bounds];
     [self addSubview:self.container];
     [self configureContainerScrollView];
+    [self addDoubleTapGestureRecognizer];
     [self disableZooming];
     
     self.imageView = [[UIImageView alloc] init];
@@ -80,6 +82,24 @@
     self.container.maximumZoomScale = self.maximumZoomScale;
     self.container.userInteractionEnabled = YES;
     self.container.contentSize = self.bounds.size;
+}
+
+- (void)addDoubleTapGestureRecognizer {
+    self.doubleTapGesture = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(containerDidDoubleTap:)];
+    self.doubleTapGesture.numberOfTapsRequired = 2;
+    [self.container addGestureRecognizer:self.doubleTapGesture];
+}
+
+- (void)containerDidDoubleTap:(UITapGestureRecognizer *)gestureRecognizer {
+    [UIView animateWithDuration:0.25 delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+        if (self.container.zoomScale == self.container.minimumZoomScale) {
+            self.container.zoomScale = self.maximumZoomScale;
+        } else {
+            self.container.zoomScale = self.minimumZoomScale;
+        }
+    } completion:^(BOOL finished) {
+        
+    }];
 }
 
 - (void)configureImageView {

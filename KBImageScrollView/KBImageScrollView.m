@@ -93,15 +93,15 @@
     [self.container addSubview:imageView];
     [self.zoomableImageViews insertObject:imageView atIndex:index];
     
-    [self updateImageViewFrames];
+    [self layoutImageViewAtIndex:(NSUInteger)index];
 }
 
-- (void)updateImageViewFrames {
+- (void)layoutImageViewAtIndex:(NSUInteger)index {
     CGFloat contentWidth = self.zoomableImageViews.count * self.container.bounds.size.width;
     CGFloat contentHeight = self.container.bounds.size.height;
     self.container.contentSize = CGSizeMake(contentWidth, contentHeight);
     
-    for (NSUInteger i = 0; i < self.zoomableImageViews.count; i++) {
+    for (NSUInteger i = index; i < self.zoomableImageViews.count; i++) {
         KBZoomableImageView *imageView = self.zoomableImageViews[i];
         CGFloat imageViewWidth = self.bounds.size.width;
         CGFloat imageViewHeight = self.bounds.size.height;
