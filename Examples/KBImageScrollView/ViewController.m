@@ -20,7 +20,7 @@
     
     KBImageScrollView *imageScrollView = [[KBImageScrollView alloc] init];
     imageScrollView.backgroundColor = [UIColor blackColor];
-    imageScrollView.frame = CGRectMake(0, 64, 320, 400);
+    imageScrollView.frame = CGRectMake(0, 20, 320, 400);
     for (NSUInteger i = 0; i < 5; i++) {
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", i]];
         [imageScrollView addImage:image];
