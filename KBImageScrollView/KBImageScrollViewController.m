@@ -24,30 +24,26 @@
     [super didReceiveMemoryWarning];
 }
 
-#pragma mark - Init
+#pragma mark - View controller's life-cycle
 
-- (instancetype)init {
-    self = [super init];
-    if (self) {
-        
-    }
-    return self;
+- (void)loadView {
+    [super loadView];
+    [self setupViews];
 }
 
-- (id)initWithCoder:(NSCoder *)aDecoder {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        
-    }
-    return self;
+- (void)viewDidLoad {
+    [super viewDidLoad];
 }
 
-- (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        [self setupViews];
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    [self.pageControl sizeToFit];
+    self.pageControl.center = CGPointMake(self.view.bounds.size.width / 2, self.view.bounds.size.height - self.pageControl.bounds.size.height/2);
+    if (self.showPageControl) {
+        self.imageScrollView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - self.pageControl.bounds.size.height);
+    } else {
+        self.imageScrollView.frame = self.view.bounds;
     }
-    return self;
 }
 
 - (void)setupViews {
@@ -56,31 +52,6 @@
     [self.view addSubview:self.imageScrollView];
     self.pageControl = [[UIPageControl alloc] init];
     [self.view addSubview:self.pageControl];
-}
-
-#pragma mark - View controller's life-cycle
-
-- (void)loadView {
-    [super loadView];
-}
-
-- (void)viewDidLoad {
-    [super viewDidLoad];
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-    
-}
-
-- (void)viewDidLayoutSubviews {
-    [super viewDidLayoutSubviews];
-    
-    self.pageControl.center = CGPointMake(self.view.bounds.size.width / 2, self.view.bounds.size.height - 15);
-    if (self.showPageControl) {
-        self.imageScrollView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - 30);
-    } else {
-        self.imageScrollView.frame = self.view.bounds;
-    }
 }
 
 #pragma mark - Accessors
@@ -100,6 +71,7 @@
 
 - (void)setShowPageControl:(BOOL)showPageControl {
     self.pageControl.hidden = !showPageControl;
+    [self viewDidLayoutSubviews];
 }
 
 #pragma mark -

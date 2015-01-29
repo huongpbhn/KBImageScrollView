@@ -46,9 +46,15 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self setupView];
-        [self setFrame:frame];
     }
     return self;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    self.container.frame = self.bounds;
+    self.maximumZoomScale = MAX([self actualSizeImageScale], self.minimumZoomScale);
+    [self layoutImageView];
 }
 
 #pragma mark - Setup Views
@@ -101,13 +107,6 @@
 
 #pragma mark - Accessors
 
-- (void)setFrame:(CGRect)frame {
-    [super setFrame:frame];
-    self.container.frame = self.bounds;
-    self.maximumZoomScale = MAX([self actualSizeImageScale], self.minimumZoomScale);
-    [self layoutImageView];
-}
-
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
     [super setBackgroundColor:backgroundColor];
     [self.container setBackgroundColor:backgroundColor];
@@ -116,14 +115,12 @@
 
 - (void)setImage:(UIImage *)image {
     _image = image;
-    
     if (!image) {
         return;
     }
     
     self.imageView.image = self.image;
-    self.maximumZoomScale = MAX([self actualSizeImageScale], self.minimumZoomScale);
-    [self layoutImageView];
+    [self layoutIfNeeded];
     [self enableZooming];
 }
 
@@ -159,13 +156,11 @@
 #pragma mark -
 
 - (void)disableZooming {
-    self.container.minimumZoomScale = self.minimumZoomScale;
-    self.container.maximumZoomScale = self.minimumZoomScale;
+    self.maximumZoomScale = self.minimumZoomScale;
 }
 
 - (void)enableZooming {
-    self.container.minimumZoomScale = self.minimumZoomScale;
-    self.container.maximumZoomScale = self.maximumZoomScale;
+    self.maximumZoomScale = self.maximumZoomScale;
 }
 
 #pragma mark - Scroll view's delegate methods
@@ -221,8 +216,8 @@
 }
 
 - (CGFloat)actualSizeImageScale {
-    CGFloat k = 1 / [self fitImageScale];
-    return k;
+    CGFloat scale = 1 / [self fitImageScale];
+    return scale;
 }
 
 @end

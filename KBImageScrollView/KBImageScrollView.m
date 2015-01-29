@@ -36,7 +36,6 @@
     if (self) {
         [self initData];
         [self setupView];
-        [self setFrame:frame];
     }
     return self;
 }
@@ -45,6 +44,16 @@
     self.zoomableImageViews = [NSMutableArray array];
     _images = [[NSMutableArray alloc] init];
     self.currentPage = 0;
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    NSUInteger currentPage = self.currentPage;
+    self.container.frame = self.bounds;
+    self.currentPage = currentPage;
+    for (NSUInteger index = 0; index < self.zoomableImageViews.count; index++) {
+        [self layoutImageViewAtIndex:index];
+    }
 }
 
 #pragma mark - Setup views
@@ -67,16 +76,6 @@
 }
 
 #pragma mark - Accessors
-
-- (void)setFrame:(CGRect)frame {
-    [super setFrame:frame];
-    NSUInteger currentPage = self.currentPage;
-    self.container.frame = self.bounds;
-    self.currentPage = currentPage;
-    for (NSUInteger index = 0; index < self.zoomableImageViews.count; index++) {
-        [self layoutImageViewAtIndex:index];
-    }
-}
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
     [super setBackgroundColor:backgroundColor];
