@@ -73,6 +73,14 @@
     self.container.frame = self.bounds;
 }
 
+- (void)setBackgroundColor:(UIColor *)backgroundColor {
+    [super setBackgroundColor:backgroundColor];
+    [self.container setBackgroundColor:backgroundColor];
+    for (KBZoomableImageView *imageView in self.zoomableImageViews) {
+        [imageView setBackgroundColor:backgroundColor];
+    }
+}
+
 #pragma mark -
 
 - (void)addImage:(UIImage *)image {
@@ -87,9 +95,8 @@
 
 - (void)insertZoomableImageViewForImage:(UIImage *)image atIndex:(NSUInteger)index {
     KBZoomableImageView *imageView = [[KBZoomableImageView alloc] initWithImage:image];
-    imageView.minimumZoomScale = 1.0f;
-    imageView.maximumZoomScale = 3.0f;
     imageView.showsScrollIndicator = YES;
+    imageView.backgroundColor = self.backgroundColor;
     [self.container addSubview:imageView];
     [self.zoomableImageViews insertObject:imageView atIndex:index];
     

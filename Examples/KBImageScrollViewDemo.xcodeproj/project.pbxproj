@@ -20,6 +20,8 @@
 		FF84100E1A779DFE00B51B56 /* 4.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FF8410061A779DFE00B51B56 /* 4.jpg */; };
 		FFCB183E1A788973001810D7 /* KBImageScrollView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFCB183B1A788973001810D7 /* KBImageScrollView.m */; };
 		FFCB183F1A788973001810D7 /* KBZoomableImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = FFCB183D1A788973001810D7 /* KBZoomableImageView.m */; };
+		FFCB189F1A78EDDA001810D7 /* 5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FFCB189E1A78EDDA001810D7 /* 5.jpg */; };
+		FFCB18A31A78EF8A001810D7 /* KBImageScrollViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FFCB18A11A78EF8A001810D7 /* KBImageScrollViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +44,9 @@
 		FFCB183B1A788973001810D7 /* KBImageScrollView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KBImageScrollView.m; sourceTree = "<group>"; };
 		FFCB183C1A788973001810D7 /* KBZoomableImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KBZoomableImageView.h; sourceTree = "<group>"; };
 		FFCB183D1A788973001810D7 /* KBZoomableImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KBZoomableImageView.m; sourceTree = "<group>"; };
+		FFCB189E1A78EDDA001810D7 /* 5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 5.jpg; sourceTree = "<group>"; };
+		FFCB18A01A78EF8A001810D7 /* KBImageScrollViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KBImageScrollViewController.h; sourceTree = "<group>"; };
+		FFCB18A11A78EF8A001810D7 /* KBImageScrollViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KBImageScrollViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +110,7 @@
 				FF8410041A779DFE00B51B56 /* 2.jpg */,
 				FF8410051A779DFE00B51B56 /* 3.jpg */,
 				FF8410061A779DFE00B51B56 /* 4.jpg */,
+				FFCB189E1A78EDDA001810D7 /* 5.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -116,6 +122,8 @@
 				FFCB183B1A788973001810D7 /* KBImageScrollView.m */,
 				FFCB183C1A788973001810D7 /* KBZoomableImageView.h */,
 				FFCB183D1A788973001810D7 /* KBZoomableImageView.m */,
+				FFCB18A01A78EF8A001810D7 /* KBImageScrollViewController.h */,
+				FFCB18A11A78EF8A001810D7 /* KBImageScrollViewController.m */,
 			);
 			name = Classes;
 			path = ../../KBImageScrollView;
@@ -181,6 +189,7 @@
 				FF84100E1A779DFE00B51B56 /* 4.jpg in Resources */,
 				FF84100C1A779DFE00B51B56 /* 2.jpg in Resources */,
 				FF84100A1A779DFE00B51B56 /* 0.jpg in Resources */,
+				FFCB189F1A78EDDA001810D7 /* 5.jpg in Resources */,
 				FF840FE01A779DC000B51B56 /* Main.storyboard in Resources */,
 				FF840FE51A779DC000B51B56 /* LaunchScreen.xib in Resources */,
 				FF840FE21A779DC000B51B56 /* Images.xcassets in Resources */,
@@ -198,6 +207,7 @@
 			files = (
 				FFCB183E1A788973001810D7 /* KBImageScrollView.m in Sources */,
 				FF840FDD1A779DC000B51B56 /* ViewController.m in Sources */,
+				FFCB18A31A78EF8A001810D7 /* KBImageScrollViewController.m in Sources */,
 				FF840FDA1A779DC000B51B56 /* AppDelegate.m in Sources */,
 				FF840FD71A779DC000B51B56 /* main.m in Sources */,
 				FFCB183F1A788973001810D7 /* KBZoomableImageView.m in Sources */,

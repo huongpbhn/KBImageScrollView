@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "KBImageScrollView.h"
+#import "KBImageScrollViewController.h"
 
 @interface ViewController ()
 
@@ -17,16 +17,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    KBImageScrollView *imageScrollView = [[KBImageScrollView alloc] init];
-    imageScrollView.backgroundColor = [UIColor blackColor];
-    imageScrollView.frame = CGRectMake(0, 20, 320, 400);
-    for (NSUInteger i = 0; i < 5; i++) {
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    KBImageScrollViewController *imageScrollViewController = [[KBImageScrollViewController alloc] init];
+        imageScrollViewController.backgroundColor = [UIColor blackColor];
+    for (NSUInteger i = 0; i < 6; i++) {
         UIImage *image = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", i]];
-        [imageScrollView addImage:image];
+        [imageScrollViewController addImage:image];
     }
     
-    [self.view addSubview:imageScrollView];
+    [self presentViewController:imageScrollViewController animated:NO completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

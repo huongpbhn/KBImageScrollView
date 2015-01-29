@@ -29,7 +29,6 @@
 - (id)initWithCoder:(NSCoder *)aDecoder {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self initData];
         [self setupView];
     }
     return self;
@@ -46,17 +45,10 @@
 - (instancetype)initWithFrame:(CGRect)frame {
     self = [super initWithFrame:frame];
     if (self) {
-        [self initData];
         [self setupView];
         [self setFrame:frame];
     }
     return self;
-}
-
-- (void)initData {
-    self.minimumZoomScale = KBDefaultMinimumZoomScale;
-    self.maximumZoomScale = KBDefaultMaximumZoomScale;
-    self.showsScrollIndicator = KBDefaultShowsScrollIndicator;
 }
 
 #pragma mark - Setup Views
@@ -75,11 +67,11 @@
 
 - (void)configureContainerScrollView {
     self.container.delegate = self;
-    self.container.showsHorizontalScrollIndicator = self.showsScrollIndicator;
-    self.container.showsVerticalScrollIndicator = self.showsScrollIndicator;
+    self.container.showsHorizontalScrollIndicator = KBDefaultShowsScrollIndicator;
+    self.container.showsVerticalScrollIndicator = KBDefaultShowsScrollIndicator;
     self.container.pagingEnabled = NO;
-    self.container.minimumZoomScale = self.minimumZoomScale;
-    self.container.maximumZoomScale = self.maximumZoomScale;
+    self.container.minimumZoomScale = KBDefaultMinimumZoomScale;
+    self.container.maximumZoomScale = KBDefaultMaximumZoomScale;
     self.container.userInteractionEnabled = YES;
     self.container.contentSize = self.bounds.size;
 }
@@ -112,7 +104,8 @@
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
     self.container.frame = self.bounds;
-    [self updateImageViewFrame];
+    self.maximumZoomScale = MAX([self actualSizeImageScale], self.minimumZoomScale);
+    [self layoutImageView];
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
@@ -129,7 +122,8 @@
     }
     
     self.imageView.image = self.image;
-    [self updateImageViewFrame];
+    self.maximumZoomScale = MAX([self actualSizeImageScale], self.minimumZoomScale);
+    [self layoutImageView];
     [self enableZooming];
 }
 
@@ -181,14 +175,14 @@
 }
 
 - (void)scrollViewDidZoom:(UIScrollView *)scrollView {
-    [self updateImageViewFrame];
+    [self layoutImageView];
 }
 
 - (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
-    [self updateImageViewFrame];
+    [self layoutImageView];
 }
 
-- (void)updateImageViewFrame {
+- (void)layoutImageView {
     CGFloat containerWidth = self.container.bounds.size.width;
     CGFloat containerHeight = self.container.bounds.size.height;
     CGFloat imageWidth = self.image.size.width;
@@ -198,10 +192,10 @@
         return;
     }
     
-    CGFloat imageScale = MIN(containerWidth / imageWidth, containerHeight / imageHeight);
+    CGFloat fitImageScale = [self fitImageScale];
     
-    CGFloat imageViewWidth = imageWidth * imageScale * self.zoomScale;
-    CGFloat imageViewHeight = imageHeight * imageScale * self.zoomScale;
+    CGFloat imageViewWidth = imageWidth * fitImageScale * self.zoomScale;
+    CGFloat imageViewHeight = imageHeight * fitImageScale * self.zoomScale;
     
     CGFloat imageViewX = MAX(0, (containerWidth - imageViewWidth) / 2);
     CGFloat imageViewY = MAX(0, (containerHeight - imageViewHeight) / 2);
@@ -211,6 +205,25 @@
     
     self.imageView.frame = CGRectMake(imageViewX, imageViewY, imageViewWidth, imageViewHeight);
     self.container.contentSize = CGSizeMake(contentWidth, contentHeight);
+}
+
+- (CGFloat)fitImageScale {
+    CGFloat containerWidth = self.container.bounds.size.width;
+    CGFloat containerHeight = self.container.bounds.size.height;
+    CGFloat imageWidth = self.image.size.width;
+    CGFloat imageHeight = self.image.size.height;
+    
+    if (imageWidth <= 0 || imageHeight <= 0) {
+        return 1;
+    }
+    
+    CGFloat imageScale = MIN(containerWidth / imageWidth, containerHeight / imageHeight);
+    return imageScale;
+}
+
+- (CGFloat)actualSizeImageScale {
+    CGFloat k = 1 / [self fitImageScale];
+    return k;
 }
 
 @end
