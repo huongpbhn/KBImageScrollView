@@ -9,11 +9,12 @@
 #import "KBImageScrollView.h"
 #import "KBZoomableImageView.h"
 
-@interface KBImageScrollView () <UIScrollViewDelegate>
+@interface KBImageScrollView () <UIScrollViewDelegate> {
+    NSMutableArray *_images;
+}
 
 @property (nonatomic, strong) UIScrollView *container;
 @property (nonatomic, strong) NSMutableArray *zoomableImageViews;
-@property (nonatomic, strong) NSMutableArray *images;
 
 @end
 
@@ -42,7 +43,7 @@
 
 - (void)initData {
     self.zoomableImageViews = [NSMutableArray array];
-    self.images = [NSMutableArray array];
+    _images = [[NSMutableArray alloc] init];
     self.currentPage = 0;
 }
 
@@ -96,6 +97,10 @@
     self.container.contentOffset = CGPointMake(currentPage * self.container.bounds.size.width, self.container.contentOffset.y);
 }
 
+- (NSArray *)images {
+    return [NSArray arrayWithArray:_images];
+}
+
 #pragma mark -
 
 - (void)addImage:(UIImage *)image {
@@ -105,7 +110,7 @@
 - (void)insertImage:(UIImage *)image atIndex:(NSUInteger)index {
     NSAssert(image, @"Cannot add nil image");
     NSAssert(index <= self.images.count, @"Index is out of range");
-    [self.images insertObject:image atIndex:index];
+    [_images insertObject:image atIndex:index];
     [self insertZoomableImageViewForImage:image atIndex:index];
 }
 
@@ -129,7 +134,7 @@
     [imageView removeFromSuperview];
     [self layoutImageViewAtIndex:index];
     [self.zoomableImageViews removeObject:imageView];
-    [self.images removeObjectAtIndex:index];
+    [_images removeObjectAtIndex:index];
 }
 
 - (void)layoutImageViewAtIndex:(NSUInteger)index {

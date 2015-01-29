@@ -45,28 +45,42 @@
 - (instancetype)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        self.imageScrollView = [[KBImageScrollView alloc] init];
-        self.imageScrollView.delegate = self;
-        [self.view addSubview:self.imageScrollView];
+        [self setupViews];
     }
     return self;
+}
+
+- (void)setupViews {
+    self.imageScrollView = [[KBImageScrollView alloc] init];
+    self.imageScrollView.delegate = self;
+    [self.view addSubview:self.imageScrollView];
+    self.pageControl = [[UIPageControl alloc] init];
+    [self.view addSubview:self.pageControl];
 }
 
 #pragma mark - View controller's life-cycle
 
 - (void)loadView {
     [super loadView];
-    self.imageScrollView.frame = self.view.bounds;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 }
 
-#pragma mark - Interface orientation
+- (void)viewDidAppear:(BOOL)animated {
+    
+}
 
-- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
-    self.imageScrollView.frame = CGRectMake(0, 0, size.width, size.height);
+- (void)viewDidLayoutSubviews {
+    [super viewDidLayoutSubviews];
+    
+    self.pageControl.center = CGPointMake(self.view.bounds.size.width / 2, self.view.bounds.size.height - 15);
+    if (self.showPageControl) {
+        self.imageScrollView.frame = CGRectMake(0, 0, self.view.bounds.size.width, self.view.bounds.size.height - 30);
+    } else {
+        self.imageScrollView.frame = self.view.bounds;
+    }
 }
 
 #pragma mark - Accessors
@@ -80,28 +94,44 @@
     return self.view.backgroundColor;
 }
 
+- (BOOL)showPageControl {
+    return !self.pageControl.hidden;
+}
+
+- (void)setShowPageControl:(BOOL)showPageControl {
+    self.pageControl.hidden = !showPageControl;
+}
+
 #pragma mark -
 
 - (void)addImage:(UIImage *)image {
     [self.imageScrollView addImage:image];
+    self.pageControl.numberOfPages = self.imageScrollView.images.count;
+    self.pageControl.currentPage = self.imageScrollView.currentPage;
 }
 
 - (void)removeImage:(UIImage *)image {
     [self.imageScrollView removeImage:image];
+    self.pageControl.numberOfPages = self.imageScrollView.images.count;
+    self.pageControl.currentPage = self.imageScrollView.currentPage;
 }
 
 - (void)insertImage:(UIImage *)image atIndex:(NSUInteger)index {
     [self.imageScrollView insertImage:image atIndex:index];
+    self.pageControl.numberOfPages = self.imageScrollView.images.count;
+    self.pageControl.currentPage = self.imageScrollView.currentPage;
 }
 
 - (void)deleteImageAtIndex:(NSUInteger)index {
     [self.imageScrollView deleteImageAtIndex:index];
+    self.pageControl.numberOfPages = self.imageScrollView.images.count;
+    self.pageControl.currentPage = self.imageScrollView.currentPage;
 }
 
 #pragma mark - KBImageScrollView's delegate methods
 
 - (void)imageScrollView:(KBImageScrollView *)imageScrollView didScrollToImage:(UIImage *)image atIndex:(NSUInteger)index {
-    
+    [self.pageControl setCurrentPage:index];
 }
 
 /*

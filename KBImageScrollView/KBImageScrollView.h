@@ -28,6 +28,8 @@
 
 - (void)deleteImageAtIndex:(NSUInteger)index;
 
+@property (nonatomic, readonly) NSArray *images;
+
 @property (nonatomic, assign) id <KBImageScrollViewDelegate> delegate;
 
 @property (nonatomic) NSUInteger currentPage;

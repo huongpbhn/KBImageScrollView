@@ -20,4 +20,6 @@
 
 @property (nonatomic, copy) UIColor *backgroundColor;
 
+@property (nonatomic) BOOL showPageControl;
+
 @end
