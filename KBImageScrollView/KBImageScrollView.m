@@ -14,7 +14,6 @@
 @property (nonatomic, strong) UIScrollView *container;
 @property (nonatomic, strong) NSMutableArray *zoomableImageViews;
 @property (nonatomic, strong) NSMutableArray *images;
-@property (nonatomic, assign) NSUInteger currentPage;
 
 @end
 
@@ -70,7 +69,12 @@
 
 - (void)setFrame:(CGRect)frame {
     [super setFrame:frame];
+    NSUInteger currentPage = self.currentPage;
     self.container.frame = self.bounds;
+    self.currentPage = currentPage;
+    for (NSUInteger index = 0; index < self.zoomableImageViews.count; index++) {
+        [self layoutImageViewAtIndex:index];
+    }
 }
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
@@ -81,6 +85,17 @@
     }
 }
 
+- (NSUInteger)currentPage {
+    CGFloat offset = self.container.contentOffset.x;
+    CGFloat pageWidth = self.container.layer.bounds.size.width;
+    NSInteger page = roundf(offset / pageWidth);
+    return page;
+}
+
+- (void)setCurrentPage:(NSUInteger)currentPage {
+    self.container.contentOffset = CGPointMake(currentPage * self.container.bounds.size.width, self.container.contentOffset.y);
+}
+
 #pragma mark -
 
 - (void)addImage:(UIImage *)image {
@@ -89,6 +104,7 @@
 
 - (void)insertImage:(UIImage *)image atIndex:(NSUInteger)index {
     NSAssert(image, @"Cannot add nil image");
+    NSAssert(index <= self.images.count, @"Index is out of range");
     [self.images insertObject:image atIndex:index];
     [self insertZoomableImageViewForImage:image atIndex:index];
 }
@@ -103,6 +119,19 @@
     [self layoutImageViewAtIndex:(NSUInteger)index];
 }
 
+- (void)removeImage:(UIImage *)image {
+    NSUInteger index = [self.images indexOfObject:image];
+    [self deleteImageAtIndex:index];
+}
+
+- (void)deleteImageAtIndex:(NSUInteger)index {
+    KBZoomableImageView *imageView = self.zoomableImageViews[index];
+    [imageView removeFromSuperview];
+    [self layoutImageViewAtIndex:index];
+    [self.zoomableImageViews removeObject:imageView];
+    [self.images removeObjectAtIndex:index];
+}
+
 - (void)layoutImageViewAtIndex:(NSUInteger)index {
     CGFloat contentWidth = self.zoomableImageViews.count * self.container.bounds.size.width;
     CGFloat contentHeight = self.container.bounds.size.height;
@@ -115,6 +144,15 @@
         CGFloat imageViewX = i * imageViewWidth;
         CGFloat imageViewY = 0;
         imageView.frame = CGRectMake(imageViewX, imageViewY, imageViewWidth, imageViewHeight);
+    }
+}
+
+#pragma mark - Scroll view's delegate methods
+
+- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView {
+    UIImage *image = self.images[self.currentPage];
+    if ([self.delegate respondsToSelector:@selector(imageScrollView:didScrollToImage:atIndex:)]) {
+        [self.delegate imageScrollView:self didScrollToImage:image atIndex:self.currentPage];
     }
 }
 

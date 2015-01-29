@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		FF0C93F61A7A159D00B4072B /* 6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FF0C93F41A7A159D00B4072B /* 6.jpg */; };
+		FF0C93F71A7A159D00B4072B /* 7.jpg in Resources */ = {isa = PBXBuildFile; fileRef = FF0C93F51A7A159D00B4072B /* 7.jpg */; };
 		FF840FD71A779DC000B51B56 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = FF840FD61A779DC000B51B56 /* main.m */; };
 		FF840FDA1A779DC000B51B56 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = FF840FD91A779DC000B51B56 /* AppDelegate.m */; };
 		FF840FDD1A779DC000B51B56 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = FF840FDC1A779DC000B51B56 /* ViewController.m */; };
@@ -25,6 +27,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		FF0C93F41A7A159D00B4072B /* 6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 6.jpg; sourceTree = "<group>"; };
+		FF0C93F51A7A159D00B4072B /* 7.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 7.jpg; sourceTree = "<group>"; };
 		FF840FD11A779DC000B51B56 /* KBImageScrollViewDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = KBImageScrollViewDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		FF840FD51A779DC000B51B56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		FF840FD61A779DC000B51B56 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -111,6 +115,8 @@
 				FF8410051A779DFE00B51B56 /* 3.jpg */,
 				FF8410061A779DFE00B51B56 /* 4.jpg */,
 				FFCB189E1A78EDDA001810D7 /* 5.jpg */,
+				FF0C93F41A7A159D00B4072B /* 6.jpg */,
+				FF0C93F51A7A159D00B4072B /* 7.jpg */,
 			);
 			path = Resources;
 			sourceTree = "<group>";
@@ -186,10 +192,12 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				FF0C93F71A7A159D00B4072B /* 7.jpg in Resources */,
 				FF84100E1A779DFE00B51B56 /* 4.jpg in Resources */,
 				FF84100C1A779DFE00B51B56 /* 2.jpg in Resources */,
 				FF84100A1A779DFE00B51B56 /* 0.jpg in Resources */,
 				FFCB189F1A78EDDA001810D7 /* 5.jpg in Resources */,
+				FF0C93F61A7A159D00B4072B /* 6.jpg in Resources */,
 				FF840FE01A779DC000B51B56 /* Main.storyboard in Resources */,
 				FF840FE51A779DC000B51B56 /* LaunchScreen.xib in Resources */,
 				FF840FE21A779DC000B51B56 /* Images.xcassets in Resources */,

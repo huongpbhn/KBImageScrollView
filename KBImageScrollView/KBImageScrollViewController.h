@@ -12,6 +12,12 @@
 
 - (void)addImage:(UIImage *)image;
 
+- (void)removeImage:(UIImage *)image;
+
+- (void)insertImage:(UIImage *)image atIndex:(NSUInteger)index;
+
+- (void)deleteImageAtIndex:(NSUInteger)index;
+
 @property (nonatomic, copy) UIColor *backgroundColor;
 
 @end

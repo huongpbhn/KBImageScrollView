@@ -9,13 +9,22 @@
 #import "KBImageScrollViewController.h"
 #import "KBImageScrollView.h"
 
-@interface KBImageScrollViewController ()
+@interface KBImageScrollViewController () <KBImageScrollViewDelegate>
 
 @property (nonatomic, strong) KBImageScrollView *imageScrollView;
+@property (nonatomic, strong) UIPageControl *pageControl;
 
 @end
 
 @implementation KBImageScrollViewController
+
+#pragma mark - Memory warning
+
+- (void)didReceiveMemoryWarning {
+    [super didReceiveMemoryWarning];
+}
+
+#pragma mark - Init
 
 - (instancetype)init {
     self = [super init];
@@ -37,10 +46,13 @@
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
         self.imageScrollView = [[KBImageScrollView alloc] init];
+        self.imageScrollView.delegate = self;
         [self.view addSubview:self.imageScrollView];
     }
     return self;
 }
+
+#pragma mark - View controller's life-cycle
 
 - (void)loadView {
     [super loadView];
@@ -51,10 +63,13 @@
     [super viewDidLoad];
 }
 
-- (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    
+#pragma mark - Interface orientation
+
+- (void)viewWillTransitionToSize:(CGSize)size withTransitionCoordinator:(id<UIViewControllerTransitionCoordinator>)coordinator {
+    self.imageScrollView.frame = CGRectMake(0, 0, size.width, size.height);
 }
+
+#pragma mark - Accessors
 
 - (void)setBackgroundColor:(UIColor *)backgroundColor {
     [self.view setBackgroundColor:backgroundColor];
@@ -65,8 +80,28 @@
     return self.view.backgroundColor;
 }
 
+#pragma mark -
+
 - (void)addImage:(UIImage *)image {
     [self.imageScrollView addImage:image];
+}
+
+- (void)removeImage:(UIImage *)image {
+    [self.imageScrollView removeImage:image];
+}
+
+- (void)insertImage:(UIImage *)image atIndex:(NSUInteger)index {
+    [self.imageScrollView insertImage:image atIndex:index];
+}
+
+- (void)deleteImageAtIndex:(NSUInteger)index {
+    [self.imageScrollView deleteImageAtIndex:index];
+}
+
+#pragma mark - KBImageScrollView's delegate methods
+
+- (void)imageScrollView:(KBImageScrollView *)imageScrollView didScrollToImage:(UIImage *)image atIndex:(NSUInteger)index {
+    
 }
 
 /*

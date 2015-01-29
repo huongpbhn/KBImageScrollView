@@ -178,10 +178,6 @@
     [self layoutImageView];
 }
 
-- (void)scrollViewDidEndZooming:(UIScrollView *)scrollView withView:(UIView *)view atScale:(CGFloat)scale {
-    [self layoutImageView];
-}
-
 - (void)layoutImageView {
     CGFloat containerWidth = self.container.bounds.size.width;
     CGFloat containerHeight = self.container.bounds.size.height;
@@ -205,9 +201,12 @@
     
     self.imageView.frame = CGRectMake(imageViewX, imageViewY, imageViewWidth, imageViewHeight);
     self.container.contentSize = CGSizeMake(contentWidth, contentHeight);
+    if (self.zoomScale == 1) {
+        self.container.contentSize = self.container.bounds.size;
+    }
 }
 
-- (CGFloat)fitImageScale {
+- (double)fitImageScale {
     CGFloat containerWidth = self.container.bounds.size.width;
     CGFloat containerHeight = self.container.bounds.size.height;
     CGFloat imageWidth = self.image.size.width;
