@@ -1,6 +1,6 @@
 #KBImageScrollView
 
-![](https://www.youtube.com/watch?v=Kl6DuWyrb8M)
+(https://www.youtube.com/watch?v=Kl6DuWyrb8M)
 
 Create a KBImageScrollViewController:
   KBImageScrollViewController *imageScrollViewController = [[KBImageScrollViewController alloc] init];
